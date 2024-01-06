@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import appConfig from './config/app.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { KeysModule } from './keys/keys.module';
+import { url } from 'inspector';
 
 
 @Module({
@@ -29,15 +30,9 @@ import { KeysModule } from './keys/keys.module';
     //   // inject: [ConfigService],
     // }),
 
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'), // Example key in your appConfig
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
-      }),
-      inject: [ConfigService],
-    }),
+    MongooseModule.forRoot(
+      "mongodb+srv://ngoccuong:hcj8eZq7lDKVyzwM@cluster0.tfzgh.mongodb.net/shopdev",
+    ),
    
     ShopsModule,
     AuthModule,

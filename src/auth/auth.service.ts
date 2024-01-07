@@ -18,17 +18,18 @@ export class AuthService {
     private readonly tokenService: TokenService,
   ) {}
 
-  async signUp(createShopDto: CreateShopDto) {
+  async signUp(createShopDto: any) {
     try {
       const { name, email, password } = createShopDto;
-      console.log('createShopDto', createShopDto);
-
+      
       const existingShop = await this.shopModel.findOne({ email }).lean();
 
       console.log('existingShop::', existingShop);
 
       if (existingShop) {
-        throw new HttpException('Shop already exists', 400);
+        throw new HttpException(
+          'Email đã tồn tại',400
+        );
       }
 
       const passwordHash = await bcrypt.hash(password, 10);
@@ -76,7 +77,11 @@ export class AuthService {
         };
       }
     } catch (error) {
-     throw new HttpException(error, 400);
+      return {
+        message: error.message,
+        statusCode: error.status,
+      };
+      }
     }
   }
-}
+

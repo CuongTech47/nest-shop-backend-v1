@@ -17,7 +17,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService); // Inject ConfigService directly
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new HttpExceptionFilter());
+  
 
   // const port = configService.get('app.port') || 3000;
 
